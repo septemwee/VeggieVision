@@ -15,9 +15,9 @@ const CartIcon = () => (
 
 export default function Navbar() {
   return (
-    <header className="flex sticky top-0 mt-0 z-50 justify-between items-center w-full bg-white">
+    <div className="flex sticky top-0 mt-0 z-50 justify-between items-center w-full bg-white">
 
-      <div className="text-xl font-bold pl-4 text-gray-800">
+      <div className="text-xl font-bold pl-20 text-gray-800">
         Veggie Vision
       </div>
 
@@ -33,6 +33,6 @@ export default function Navbar() {
         <SearchIcon />
         <CartIcon />
       </div>
-    </header>
+    </div>
   );
 }

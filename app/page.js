@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../src/components/navbar.js';
+import Box from '../src/components/box.js';
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-800" viewBox="0 0 20 20" fill="currentColor">
@@ -10,26 +11,33 @@ const PlayIcon = () => (
 
 export default function VeggieHome() {
   return (
-    <div className="relative bg-[#F0F5F0] font-sans flex py-20 pl-20">
-      <div className="absolute top-0 left-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+    <>
+      <div className="relative h-full flex pl-20">
+        <div className="absolute z-0 top-0 left-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute z-0 bottom-0 right-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full translate-x-1/2 translate-y-1/2"></div>
 
-      <div className="absolute bottom-0 right-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full translate-x-1/2 translate-y-1/2"></div>
-      <main className="relative z-10 mt-28 text-left max-w-lg">
-        <div>
-          <h1 className="mt-8 text-5xl md:text-7xl font-extrabold text-green-900 leading-tight">
-            Veggie Vision
-          </h1>
-          <p className="mt-6 text-gray-600">
-            Keep it easy with these simple but delicious recipes from make-ahead lunches and midweek meals to fuss-free sides.
-          </p>
-          <div className="mt-10 flex items-center justify-start gap-6">
-            <button className="bg-green-600 text-white font-bold py-3 px-20 rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105">
-              Upload Now!
-            </button>
-          </div>
+        <div className="relative z-10 mt-20 text-left max-w-lg">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-green-900 leading-tight">
+              Veggie <br /> Vision
+            </h1>
+            <p className="mt-6 text-gray-600">
+              Keep it easy with these simple but delicious recipes from make-ahead lunches and midweek meals to fuss-free sides.
+            </p>
+            <div className="mt-10 flex items-center justify-start gap-6">
+              <button className="bg-green-600 text-white font-bold py-3 px-20 rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105">
+                Upload Now!
+              </button>
+            </div>
         </div>
-      </main>
 
-    </div>
+
+
+        
+      </div>
+
+      <div className="relative mt-10 mx-20 z-50">
+        <Box/>
+      </div>
+    </>
   );
 }
