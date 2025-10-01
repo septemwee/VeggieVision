@@ -1,6 +1,11 @@
-import React from 'react';
-import Navbar from '../src/components/navbar.js';
-import Box from '../src/components/box.js';
+'use client';
+
+import React, {useState} from 'react';
+import Image from 'next/image';
+import UploadModal from '../src/components/uploadModal.js';
+import OutputDisplay from '@/src/components/outputDisplay.js';
+import vegetableBasketImage from '@/src/images/vegetable_basket.png';
+
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-800" viewBox="0 0 20 20" fill="currentColor">
@@ -9,10 +14,19 @@ const PlayIcon = () => (
 );
 
 
+
 export default function VeggieHome() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+  const handleUploadSuccess = (imageUrl) => {
+    setUploadedImageUrl(imageUrl);
+  };
+
+
   return (
     <>
-      <div className="relative h-full flex pl-20">
+      <div className="relative h-full flex px-20">
         <div className="absolute z-0 top-0 left-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute z-0 bottom-0 right-0 w-96 h-96 md:w-[500px] md:h-[500px] bg-green-300/50 rounded-full translate-x-1/2 translate-y-1/2"></div>
 
@@ -23,21 +37,39 @@ export default function VeggieHome() {
             <p className="mt-6 text-gray-600">
               Keep it easy with these simple but delicious recipes from make-ahead lunches and midweek meals to fuss-free sides.
             </p>
-            <div className="mt-10 flex items-center justify-start gap-6">
-              <button className="bg-green-600 text-white font-bold py-3 px-20 rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105">
+
+            {/* ปุ่มอัปโหลดไฟล์ กดแแล้วขึ้น pop up = uploadModal.js component */}
+            <div className="mt-10 flex items-center gap-6">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="bg-green-600 text-white font-bold py-3 px-20 rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105"
+              >
                 Upload Now!
               </button>
             </div>
         </div>
 
-
-
-        
+        <div className="flex">
+          <Image
+            src={vegetableBasketImage}
+            alt="Uploaded vegetable"
+            width={500}   
+            height={500}  
+            // className="rounded-lg shadow-lg"
+          />
+        </div>
       </div>
 
-      <div className="relative mt-10 mx-20 z-50">
-        <Box/>
+      <div className="relative my-10 mx-20">
+        <OutputDisplay imageUrl={uploadedImageUrl} />
       </div>
+
+      <UploadModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        onUploadSuccess={handleUploadSuccess} 
+      />
+      
     </>
   );
 }

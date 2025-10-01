@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Box() {
+export default function Box({ children }) {
   return (
-    // นี่คือคลาสหลักที่สร้าง "กล่อง" ขึ้นมา
-    <div className="bg-white flex rounded-xl border border-gray-200 shadow-md p-6">
-      <h1>Type</h1>
+    // คลาสเหล่านี้คือสไตล์ของ "กล่อง"
+    <div className="bg-white rounded-xl border border-gray-200 shadow-md p-6 text-left w-full">
+      {children}
     </div>
   );
 }
