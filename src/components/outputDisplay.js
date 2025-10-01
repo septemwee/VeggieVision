@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Card from './card';
 import BasilImage from '@/src/images/Basil.png';
+import Carousel from './carousel';
 
 
 // Component หลักของเรา
@@ -23,20 +24,33 @@ export default function OutputDisplay({ imageUrl }) {
       ) : (
 
         // ก่อนอัปโหลดรูป
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8 ">
-          <Card 
-            imageVeg={BasilImage}
-            title = "โหระพา"
-          />
-          <Card 
-            imageVeg={BasilImage}
-            title = "โหระพา"
-          />
-          <Card 
-            imageVeg={BasilImage}
-            title = "โหระพา"
-          />
-        </div>
+            <Carousel>
+                <div className="flex-shrink-0 w-1/3 snap-start">
+                    <Card 
+                        imageVeg={BasilImage}
+                        title="โหระพา 1"
+                    />
+                </div>
+                <div className="flex-shrink-0 w-1/3 snap-start">
+                    <Card 
+                        imageVeg={BasilImage}
+                        title="โหระพา 2"
+                    />
+                </div>
+                <div className="flex-shrink-0 w-1/3 snap-start">
+                    <Card 
+                        imageVeg={BasilImage}
+                        title="โหระพา 3"
+                    />
+                </div>
+                <div className="flex-shrink-0 w-1/3 snap-start">
+                    <Card 
+                        imageVeg={BasilImage}
+                        title="โหระพา 4"
+                    />
+                </div>
+                {/* เพิ่ม Card อื่นๆ ต่อได้เลย */}
+            </Carousel>
       )}
     </div>
   );

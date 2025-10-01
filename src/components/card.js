@@ -22,12 +22,11 @@ export default function Card({
     imageVeg,title
 }) {
     return (
-        <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out w-full max-w-xs pt-24 text-center">
-            <div className="relative w-48 h-48 mx-auto -mt-40 mb-4">
+        <div className="relative m-6 overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out w-full max-w-xs pt-10 text-center">
+            <div className=" h-full w-full mx-auto ">
                 <Image
                     src={imageVeg}
                     alt={title}
-                    layout="fill"
                     objectFit="contain"
                 />
             </div>
