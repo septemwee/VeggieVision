@@ -16,11 +16,14 @@ const PlayIcon = () => (
 
 export default function VeggieHome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [aiResultName, setAiResultName] = useState(null);
   
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const handleUploadSuccess = (imageUrl) => {
     setUploadedImageUrl(imageUrl);
   };
+
+  const aiResultName = "โหระพา"
 
   return (
     <div className="bg-white text-gray-800">
@@ -65,7 +68,10 @@ export default function VeggieHome() {
 
       {/* --- Output Section --- */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28">
-        <OutputDisplay imageUrl={uploadedImageUrl} />
+        <OutputDisplay 
+          imageUrl={uploadedImageUrl} 
+          vegName={aiResultName}
+        />
       </div>
 
       <UploadModal 
