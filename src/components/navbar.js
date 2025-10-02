@@ -18,7 +18,7 @@ export default function Navbar() {
     <div className="flex sticky top-0 mt-0 z-50 justify-between items-center w-full bg-white">
 
       <div className="text-xl pl-20 text-gray-800">
-        Veggie Vision
+        
       </div>
 
       <nav className="hidden md:flex items-center gap-8">
