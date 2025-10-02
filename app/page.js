@@ -28,7 +28,7 @@ export default function VeggieHome() {
       <div className="absolute z-0 bottom-0 right-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full translate-x-1/2 translate-y-1/2"></div>
 
       <main className="relative z-10 max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-20 lg:pb-46">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-20 lg:pb-10">
 
           {/* -- Text Content -- */}
           <div className="lg:w-1/2 text-center lg:text-left">
@@ -64,9 +64,9 @@ export default function VeggieHome() {
       </main>
 
       {/* --- Output Section --- */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28">
         <OutputDisplay imageUrl={uploadedImageUrl} />
-      </section>
+      </div>
 
       <UploadModal 
         isOpen={isModalOpen} 

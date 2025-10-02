@@ -19,31 +19,22 @@ const ChevronRightIcon = () => (
 
 /**
  * CustomCarousel Component
- * Carousel ที่เขียนขึ้นเองทั้งหมดโดยไม่ใช้ library
- * @param {object} props
- * @param {React.ReactNode} props.children - item ที่จะแสดงใน Carousel
  */
 export default function Carousel({ children }) {
     const scrollContainerRef = useRef(null);
-    const [isAtStart, setIsAtStart] = useState(true);
+    // isAtStart เริ่มเป็น true เพราะเราจะบังคับให้มันอยู่ที่ซ้ายสุด
+    const [isAtStart, setIsAtStart] = useState(true); 
     const [isAtEnd, setIsAtEnd] = useState(false);
     
-    // 🔴 กำหนดขนาด gap ของ Card (ต้องตรงกับ gap-4 ใน className ของ div scrollContainerRef)
     const cardGap = 16; // gap-4 ใน Tailwind CSS คือ 16px
-    // จำนวน Card ที่แสดงในแต่ละหน้า (ตาม OutputDisplay ที่ใช้ w-1/3)
-    const cardsPerPage = 3;
-
-    // 2. ฟังก์ชันสำหรับเลื่อน
+    
+    // 2. ฟังก์ชันสำหรับเลื่อน (ไม่เปลี่ยนแปลง)
     const handleScroll = (direction) => {
         const container = scrollContainerRef.current;
         if (container) {
-            // 🔴 เปลี่ยน scrollAmount ให้เลื่อนทีละ 1 Card + gap
-            // ต้องมั่นใจว่า Card มี w-1/3 และ gap-4 ถูกกำหนดไว้อย่างถูกต้อง
-            const firstCard = container.querySelector('.flex-shrink-0'); // อ้างอิง Card ตัวแรก
+            const firstCard = container.querySelector('.flex-shrink-0');
             if (!firstCard) return;
 
-            // คำนวณความกว้างของ 1 Card (รวม margin ด้านขวาถ้ามี)
-            // clientWidth ของ Card 1 ใบ + gap ที่ตามมา
             const scrollAmount = firstCard.clientWidth + cardGap; 
             
             const newScrollLeft = direction === 'right' 
@@ -57,30 +48,45 @@ export default function Carousel({ children }) {
         }
     };
 
-    // 3. ฟังก์ชันสำหรับตรวจสอบสถานะการ scroll (เพื่อซ่อน/แสดงปุ่ม)
+    // 3. ฟังก์ชันสำหรับตรวจสอบสถานะการ scroll (ไม่เปลี่ยนแปลง)
     const checkScrollPosition = () => {
         const container = scrollContainerRef.current;
         if (container) {
             const { scrollLeft, scrollWidth, clientWidth } = container;
-            // 🔴 ปรับค่า isAtStart/isAtEnd ให้ยืดหยุ่นขึ้นเล็กน้อย
-            // ใช้ค่าที่ใกล้เคียง 0 หรือ scrollWidth - clientWidth
-            setIsAtStart(scrollLeft <= 10); // buffer 10px
-            setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 10); // buffer 10px
+            // ใช้ buffer 10px ในการตัดสินใจ
+            setIsAtStart(scrollLeft <= 10); 
+            setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 10);
         }
     };
 
-    // 4. ใช้ useEffect เพื่อเรียก checkScrollPosition เมื่อ component โหลดเสร็จและ Resize
+    // 4. ใช้ useEffect เพื่อตั้งค่าเริ่มต้นและจัดการ Event Listener
     useEffect(() => {
-        // 🔴 ตั้งค่า scrollLeft เป็น 0 เมื่อโหลดครั้งแรก เพื่อให้ชิดซ้ายสุดเสมอ
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollLeft = 0;
+        const container = scrollContainerRef.current;
+        if (container) {
+            // 🔴 การแก้ไขหลัก: บังคับ Scroll เป็น 0 ด้วย setTimeout(0)
+            // เพื่อให้มั่นใจว่ารันหลังจากการคำนวณ DOM/Snap เสร็จสมบูรณ์
+            setTimeout(() => {
+                const originalScrollBehavior = container.style.scrollBehavior;
+                
+                // ปิด smooth scroll ชั่วคราว
+                container.style.scrollBehavior = 'auto'; 
+                
+                // **บังคับตั้งค่า scrollLeft เป็น 0**
+                container.scrollLeft = 0;
+                
+                // คืนค่า scroll-behavior เดิม
+                container.style.scrollBehavior = originalScrollBehavior;
+
+                checkScrollPosition();
+            }, 0); 
         }
-        checkScrollPosition();
+
+        // Listener สำหรับ Resize
         window.addEventListener('resize', checkScrollPosition);
         return () => window.removeEventListener('resize', checkScrollPosition);
-    }, []);
+    }, []); // Run only once on mount
 
-    // 5. เพิ่ม event listener ให้ checkScrollPosition ทำงานเมื่อมีการเลื่อน
+    // 5. เพิ่ม event listener ให้ checkScrollPosition ทำงานเมื่อมีการเลื่อน (ไม่เปลี่ยนแปลง)
     useEffect(() => {
         const container = scrollContainerRef.current;
         if (container) {
@@ -91,14 +97,14 @@ export default function Carousel({ children }) {
 
 
     return (
-        // 🔴 ปรับ class ของ div นอกสุด (relative container)
-        // mx-auto จัดให้อยู่กึ่งกลาง, w-full, และเพิ่ม px-4 ให้มี padding ด้านข้าง
+        // Container หลัก: กำหนดพื้นที่การ์ดจะแสดงผล
         <div className="relative w-full max-w-5xl mx-auto px-4"> 
+            
             {/* ปุ่มเลื่อนซ้าย */}
             {!isAtStart && (
                 <button 
                     onClick={() => handleScroll('left')} 
-                    // 🔴 ปรับตำแหน่งปุ่ม: ให้มันชิดซ้ายของ div ที่มี px-4
+                    // ปรับตำแหน่ง: left-0, -translate-x-1/2 
                     className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full p-2 shadow-md z-10 hover:bg-gray-100 transition"
                     aria-label="Previous"
                 >
@@ -109,9 +115,7 @@ export default function Carousel({ children }) {
             {/* Container ที่จะ scroll */}
             <div 
                 ref={scrollContainerRef}
-                // 🔴 นำ px-6 ออกจากตรงนี้ เพื่อให้ padding ถูกจัดการโดย div ด้านนอก
-                // และยังคงมี gap-4 สำหรับช่องว่างระหว่าง Card
-                className="flex items-stretch gap-4 py-2 overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+                className="flex items-stretch gap-4 py-6 -mx-4 px-4 overflow-x-scroll snap-x snap-start hide-scrollbar"
             >
                 {children}
             </div>
@@ -120,7 +124,7 @@ export default function Carousel({ children }) {
             {!isAtEnd && (
                 <button 
                     onClick={() => handleScroll('right')}
-                    // 🔴 ปรับตำแหน่งปุ่ม: ให้มันชิดขวาของ div ที่มี px-4
+                    // ปรับตำแหน่ง: right-0, translate-x-1/2 
                     className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 bg-white rounded-full p-2 shadow-md z-10 hover:bg-gray-100 transition"
                     aria-label="Next"
                 >
