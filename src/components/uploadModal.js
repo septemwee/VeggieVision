@@ -1,3 +1,5 @@
+// components/uploadModal.js
+
 'use client';
 
 import React, { useState, useRef } from 'react';
@@ -28,6 +30,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
     setError('');
     setUploadStatus('uploading');
     
+    // 💡 การจำลองการอัปโหลด
     setTimeout(() => {
       setUploadStatus('success');
       const imageUrl = URL.createObjectURL(selectedFile);
@@ -49,9 +52,11 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-white-100/20 backdrop-blur-lg  flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative transition-all">
-        <button onClick={handleClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+    // 🔴 ปรับ Backdrop: ใช้ bg-black/50 ที่รองรับดีกว่า และเพิ่ม backdrop-blur-sm
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
+      {/* 🔴 ปรับ Modal Content: ขนาดและ padding responsive */}
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-md mx-auto p-4 sm:p-6 relative transition-all transform scale-100 opacity-100">
+        <button onClick={handleClose} className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 p-1">
           <CloseIcon />
         </button>
 
@@ -62,18 +67,18 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
           <>
             <h2 className="text-xl font-bold text-gray-800 mb-4">Upload File</h2>
             <div 
-              className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+              className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center cursor-pointer transition-colors ${
                 error ? 'border-red-500' : 'border-gray-300 hover:border-green-500'
               }`}
               onClick={() => fileInputRef.current.click()}
             >
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileSelect} />
-              <p className="text-gray-500">{selectedFile ? `Selected: ${selectedFile.name}` : 'Click to select a file'}</p>
+              <p className="text-gray-500 text-sm sm:text-base">{selectedFile ? `Selected: ${selectedFile.name}` : 'Click to select a file'}</p>
             </div>
             {selectedFile && (
-              <div className="mt-4 flex items-center gap-2 p-2 bg-gray-100 rounded">
+              <div className="mt-4 flex items-center gap-2 p-2 bg-gray-100 rounded break-words">
                 <FileIcon />
-                <span className="text-sm text-gray-700">{selectedFile.name}</span>
+                <span className="text-sm text-gray-700 truncate">{selectedFile.name}</span>
               </div>
             )}
 
@@ -84,8 +89,8 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
             </div>
 
             <div className="mt-6 flex justify-end gap-4">
-              <button onClick={handleClose} className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">Cancel</button>
-              <button onClick={handleUpload} className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Upload</button>
+              <button onClick={handleClose} className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 text-sm sm:text-base">Cancel</button>
+              <button onClick={handleUpload} className="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 text-sm sm:text-base">Upload</button>
             </div>
           </>
         )}
@@ -97,7 +102,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
             <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
               <div className="bg-green-600 h-2.5 rounded-full animate-progress"></div>
             </div>
-            <p className="mt-4 text-gray-500">{selectedFile.name}</p>
+            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center">{selectedFile.name}</p>
           </div>
         )}
 
@@ -105,7 +110,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         {uploadStatus === 'success' && (
           <div className="flex flex-col items-center justify-center h-48">
             <CheckIcon />
-            <h2 className="text-xl font-bold text-gray-800 mt-4">Upload Successful!</h2>
+            <h2 className="text-xl font-bold text-gray-800 mt-4 text-center">Upload Successful!</h2>
           </div>
         )}
       </div>

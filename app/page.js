@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useState , useRef} from 'react';
 import Image from 'next/image';
 import UploadModal from '../src/components/uploadModal.js';
 import OutputDisplay from '@/src/components/outputDisplay.js';
@@ -16,14 +16,21 @@ const PlayIcon = () => (
 
 export default function VeggieHome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [aiResultName, setAiResultName] = useState(null);
+  const [aiResultName, setAiResultName] = useState("แมงลัก"); 
   
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const handleUploadSuccess = (imageUrl) => {
     setUploadedImageUrl(imageUrl);
+    if (outputRef.current) {
+      outputRef.current.scrollIntoView({
+          behavior: 'smooth', 
+          block: 'start', 
+      });
+    }
   };
 
-  const aiResultName = "โหระพา"
+  const outputRef = useRef(null);
+
 
   return (
     <div className="bg-white text-gray-800">
@@ -51,7 +58,7 @@ export default function VeggieHome() {
             </div>
           </div>
 
-          <div className="lg:w-1/2 flex justify-center lg:justify-end">
+          <div className="hidden lg:flex lg:w-1/2 flex justify-center lg:justify-end">
             <Image
               src={vegetableBasketImage}
               alt="A basket full of fresh vegetables"
@@ -67,7 +74,10 @@ export default function VeggieHome() {
       </main>
 
       {/* --- Output Section --- */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28">
+      <div 
+        ref={outputRef} 
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28"
+      >
         <OutputDisplay 
           imageUrl={uploadedImageUrl} 
           vegName={aiResultName}
