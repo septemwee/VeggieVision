@@ -44,7 +44,7 @@ export default function VeggieHome() {
       <div className="absolute z-0 bottom-0 right-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full translate-x-1/2 translate-y-1/2"></div>
 
       <main className="relative z-10 max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-20 lg:pb-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-16 lg:pb-10">
 
           {/* -- Text Content -- */}
           <div className="lg:w-1/2 text-center lg:text-left">
@@ -52,7 +52,7 @@ export default function VeggieHome() {
               Veggie Vision
             </h1>
             <p className="mt-4 text-lg text-gray-600 max-w-xl mx-auto lg:mx-0">
-              Discover delicious and simple vegetable recipes. From quick lunches to delightful dinners, eating healthy has never been easier.
+                ต้องการรู้ไหมว่าผักนี้คืออะไร? Veggie Vision ช่วยคุณได้! เพียงแค่ อัปโหลดรูปภาพผักของคุณ ระบบ AI จะวิเคราะห์และระบุชื่อผักให้คุณในไม่กี่วินาที ทำให้การแยกแยะผักเป็นเรื่องง่ายกว่าที่เคย
             </p>
             <div className="mt-8 flex justify-center lg:justify-start">
               <button 
