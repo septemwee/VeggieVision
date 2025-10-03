@@ -29,7 +29,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={kanit.className} >
-        <Navbar />
         <main className="flex-grow">
           {children}
         </main>
