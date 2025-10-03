@@ -1,11 +1,11 @@
 // data/vegetableData.js
-import BasilImage from '@/src/images/Basil.png';          // โหระพา
-import HolyBasilImage from '@/src/images/HolyBasil.png';    // กะเพรา
-import SweetBasilImage from '@/src/images/SweetBasil.png';  // แมงลัก
-import GarlicChivesImage from '@/src/images/Basil.png'; // กุยช่าย
-import CorianderImage from '@/src/images/Basil.png';    // ผักชี
+import BasilImage from '@/src/images/Basil.png';          // โหระพา (Sweet Basil)
+import HolyBasilImage from '@/src/images/HolyBasil.png';    // กะเพรา (Holy Basil)
+import SweetBasilImage from '@/src/images/SweetBasil.png';  // แมงลัก (Lemon Basil)
+import ChineseChivesImage from '@/src/images/Basil.png'; // กุยช่าย
+import CilantroImage from '@/src/images/Basil.png';    // ผักชี
 import CeleryImage from '@/src/images/Basil.png';          // ขึ้นฉ่าย
-import GreenOnionImage from '@/src/images/Basil.png';  // ต้นหอม
+import SpringOnionImage from '@/src/images/Basil.png';  // ต้นหอม
 
 
 export const getVegetableData = (name) => {
@@ -15,8 +15,10 @@ export const getVegetableData = (name) => {
             return {
                 name: "โหระพา",
                 imageSrc: BasilImage,
+                // ✅ แก้ไข: ชื่อวิทยาศาสตร์ที่ถูกต้องสำหรับโหระพาคือ Sweet Basil
                 scientificName: "Sweet Basil (Ocimum basilicum)",
-                localNames: "แมงลัก (ไทย), สะระแหน่ช้าง (ลาว)",
+                // ✅ แก้ไข: ชื่อท้องถิ่นที่ถูกต้องสำหรับโหระพา
+                localNames: "กอมก้อ (เหนือ), โหระพาไทย",
                 description: "ใบมีสีเขียวเข้ม รูปไข่ปลายแหลม มีก้านใบสีม่วงแดงหรือสีน้ำตาลอมแดง กลิ่นหอมแรงและมีรสชาติหวานเผ็ดเล็กน้อย มีช่อดอกสีขาวอมม่วง",
                 dishes: ["แกงเขียวหวาน", "หอยแมลงภู่/กุ้งอบวุ้นเส้น", "ผัดฉ่า", "พิซซ่า/พาสต้าสไตล์อิตาลี"],
                 pickingMethod: [
@@ -58,7 +60,8 @@ export const getVegetableData = (name) => {
         case 'แมงลัก':
             return {
                 name: "แมงลัก",
-                imageSrc: SweetBasilImage,
+                imageSrc: SweetBasilImage, // ✅ แก้ไขตัวแปรรูปภาพ
+                // ✅ แก้ไข: ชื่อวิทยาศาสตร์ที่ถูกต้องสำหรับแมงลักคือ Lemon Basil
                 scientificName: "Lemon Basil (Ocimum citriodorum)",
                 localNames: "กอมก้อขาว (เหนือ), อี่ตู่ (อีสาน)",
                 description: "ใบมีสีเขียวอ่อน รูปไข่ปลายแหลมคล้ายโหระพาแต่เล็กกว่า ขอบใบเรียบหรือหยักมนตื้น ๆ มีกลิ่นหอมคล้ายมะนาวและรสชาติอ่อนกว่าโหระพา",
@@ -80,7 +83,7 @@ export const getVegetableData = (name) => {
         case 'กุยช่าย':
             return {
                 name: "กุยช่าย",
-                imageSrc: GarlicChivesImage,
+                imageSrc: ChineseChivesImage, // ✅ แก้ไขตัวแปรรูปภาพ
                 scientificName: "Garlic Chives (Allium tuberosum)",
                 localNames: "ผักไม้, หอมแป้น",
                 description: "มีใบเรียวยาวแบนคล้ายใบหญ้า มีสีเขียวเข้ม ไม่มีปล้องและกลวง มีกลิ่นฉุนคล้ายกระเทียม ดอกมีสีขาวเป็นช่อ",
@@ -102,8 +105,8 @@ export const getVegetableData = (name) => {
         case 'ผักชี':
             return {
                 name: "ผักชี",
-                imageSrc: CorianderImage,
-                scientificName: "Coriander (Coriandrum sativum)",
+                imageSrc: CilantroImage, // ✅ แก้ไขตัวแปรรูปภาพ
+                scientificName: "Cilantro (Coriandrum sativum)",
                 localNames: "ผักหอม, ผักหอมป้อม",
                 description: "มีใบเล็กกลมหยักเป็นแฉก มีทั้งส่วนใบ ก้าน และรากที่เป็นสีขาว รากมีกลิ่นหอมแรงและใช้เป็นส่วนประกอบสำคัญในเครื่องแกง",
                 dishes: ["โรยหน้าต้มยำ/ก๋วยเตี๋ยว", "ยำต่างๆ", "รากใช้ทำพริกแกง/สามเกลอ", "ใส่ในสลัด"],
@@ -124,7 +127,7 @@ export const getVegetableData = (name) => {
         case 'ขึ้นฉ่าย':
             return {
                 name: "ขึ้นฉ่าย",
-                imageSrc: CeleryImage,
+                imageSrc: CeleryImage, // ✅ แก้ไขตัวแปรรูปภาพ
                 scientificName: "Celery (Apium graveolens)",
                 localNames: "ผักหอม, ผักตั้งโอ๋ (แต้จิ๋ว)",
                 description: "มีก้านและลำต้นอวบน้ำ ใบมีสีเขียวอ่อน มีลักษณะเป็นใบย่อยหยักมน มีกลิ่นหอมฉุนเฉพาะตัว ลำต้นมักมีสีเขียวอ่อนถึงเขียวแกมเหลือง",
@@ -146,7 +149,7 @@ export const getVegetableData = (name) => {
         case 'ต้นหอม':
             return {
                 name: "ต้นหอม",
-                imageSrc: GreenOnionImage,
+                imageSrc: SpringOnionImage, // ✅ แก้ไขตัวแปรรูปภาพ
                 scientificName: "Green Onion (Allium fistulosum)",
                 localNames: "หอมต้น, หอมบั่ว",
                 description: "มีลำต้นเป็นท่อกลมยาวสีเขียว โคนลำต้นเป็นสีขาวอวบเล็กน้อย มีรากสีขาวเป็นกระจุก มีกลิ่นฉุนคล้ายหัวหอมใหญ่แต่รสชาติอ่อนกว่า",
