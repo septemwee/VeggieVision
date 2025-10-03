@@ -39,14 +39,21 @@ export default function OutputDisplay({ imageUrl , vegName }) {
                 // 🔴 1. หลังอัปโหลดรูป: แสดง VegetableDetail
                 <div className="w-full">
                     <h2 className="text-4xl font-extrabold text-green-800 text-center border-b-3 border-green-600 p-8 mb-4 max-w-5xl mx-auto">ผลลัพธ์จากการวิเคราะห์</h2>
-                    <VegetableDetail vegetableName={vegName} />
+                    <VegetableDetail 
+                      vegetableName={vegName}
+                      uploadedImageUrl={imageUrl}
+                    />
                 </div>
             ) : (
                 // 🔴 2. ก่อนอัปโหลดรูป: แสดง Carousel
                 <Carousel>
                     {allVegetables.map((veg, index) => (
                          <div key={index} className={cardWidthClasses}> 
-                            <Card imageVeg={veg.imageSrc} title={veg.name} />
+                            <Card 
+                              imageVeg={veg.imageSrc} 
+                              title={veg.name}
+                              vegetableData={veg} 
+                            />
                          </div>
                     ))}
                 </Carousel>
