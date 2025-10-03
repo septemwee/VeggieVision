@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // ไอคอนลูกศรซ้าย
 const ChevronLeftIcon = () => (
@@ -98,7 +98,7 @@ export default function Carousel({ children }) {
 
     return (
         // Container หลัก: กำหนดพื้นที่การ์ดจะแสดงผล
-        <div className="relative w-full max-w-5xl mx-auto px-4"> 
+        <div className="relative w-full max-w-5xl mx-auto px-8 "> 
             
             {/* ปุ่มเลื่อนซ้าย */}
             {!isAtStart && (
