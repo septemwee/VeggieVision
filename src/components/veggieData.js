@@ -10,8 +10,8 @@ import GreenOnionImage from '@/src/images/Basil.png';  // ต้นหอม
 
 export const getVegetableData = (name) => {
     // ใช้ .toLowerCase() เพื่อให้รองรับการค้นหาแบบไม่คำนึงถึงตัวพิมพ์ใหญ่-เล็ก
-    switch (name?.toLowerCase()) {
-        case 'โหระพา':
+    switch (name) {
+        case 'Basil':
             return {
                 name: "โหระพา",
                 imageSrc: BasilImage,
@@ -33,7 +33,7 @@ export const getVegetableData = (name) => {
                     "บำรุงหัวใจและหลอดเลือด"
                 ]
             };
-        case 'กะเพรา':
+        case 'Holy Basil':
             return {
                 name: "กะเพรา",
                 imageSrc: HolyBasilImage,
@@ -55,7 +55,7 @@ export const getVegetableData = (name) => {
                     "ช่วยลดระดับน้ำตาลในเลือด"
                 ]
             };
-        case 'แมงลัก':
+        case 'Sweet Basil':
             return {
                 name: "แมงลัก",
                 imageSrc: SweetBasilImage,
@@ -77,7 +77,7 @@ export const getVegetableData = (name) => {
                     "มีสารที่ช่วยบำรุงสายตา"
                 ]
             };
-        case 'กุยช่าย':
+        case 'Chinese Chives':
             return {
                 name: "กุยช่าย",
                 imageSrc: GarlicChivesImage,
@@ -99,7 +99,7 @@ export const getVegetableData = (name) => {
                     "ใยอาหารสูงช่วยในการขับถ่าย"
                 ]
             };
-        case 'ผักชี':
+        case 'Cilantro':
             return {
                 name: "ผักชี",
                 imageSrc: CorianderImage,
@@ -121,7 +121,7 @@ export const getVegetableData = (name) => {
                     "ช่วยขับพิษและลดอาการปวดฟัน"
                 ]
             };
-        case 'ขึ้นฉ่าย':
+        case 'Celery':
             return {
                 name: "ขึ้นฉ่าย",
                 imageSrc: CeleryImage,
@@ -143,7 +143,7 @@ export const getVegetableData = (name) => {
                     "มีใยอาหารและน้ำมาก ช่วยในการย่อยอาหาร"
                 ]
             };
-        case 'ต้นหอม':
+        case 'Spring Onion':
             return {
                 name: "ต้นหอม",
                 imageSrc: GreenOnionImage,

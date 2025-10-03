@@ -9,15 +9,19 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const file = formData.get("image");
-     console.log(file);
+    console.log(file);
 
-    if (!file) return NextResponse.json({ error: "No file sent" }, { status: 400 });
+    if (!file)
+      return NextResponse.json({ error: "No file sent" }, { status: 400 });
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
     const form = new FormData();
-    form.append("image", buffer, { filename: file.name, contentType: file.type });
+    form.append("image", buffer, {
+      filename: file.name,
+      contentType: file.type,
+    });
 
     const resFlask = await fetch("http://localhost:5000/predict", {
       method: "POST",
@@ -26,9 +30,20 @@ export async function POST(req) {
     });
 
     const data = await resFlask.json();
-    console.log(data);
-    return NextResponse.json({ status: "success", predictions: data });
-
+    console.log("data:",data);
+    // หา object ที่ confidence สูงที่สุด
+    let bestPrediction = null;
+    if (Array.isArray(data) && data.length > 0) {
+      bestPrediction = data.reduce((max, item) =>
+        item.confidence > max.confidence ? item : max
+      );
+    }
+    console.log("bestPrediction:",bestPrediction);
+    return NextResponse.json({
+      status: "success",
+      bestPrediction, // ส่ง class + confidence สูงสุดกลับไป
+      predictions: data, // ถ้าอยากเก็บผลลัพธ์ทั้งหมดด้วย
+    });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: err.message }, { status: 500 });

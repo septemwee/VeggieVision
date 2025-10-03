@@ -22,13 +22,13 @@ export default function OutputDisplay({ imageUrl , vegName }) {
                        
 
     const allVegetables = [
-        getVegetableData('โหระพา'), 
-        getVegetableData('กะเพรา'), 
-        getVegetableData('แมงลัก'),
-        getVegetableData('กุยช่าย'),
-        getVegetableData('ผักชี'),
-        getVegetableData('ขึ้นฉ่าย'),
-        getVegetableData('ต้นหอม'),
+        getVegetableData('Basil'), 
+        getVegetableData('Holy Basil'), 
+        getVegetableData('Sweet Basil'),
+        getVegetableData('Chinese Chives'),
+        getVegetableData('Cilantro'),
+        getVegetableData('Celery'),
+        getVegetableData('Spring Onion'),
         // เพิ่มผักอื่นๆ สำหรับการทดสอบ Carousel
     ].filter(Boolean);
 

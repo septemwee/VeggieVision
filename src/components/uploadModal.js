@@ -57,7 +57,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
       if (data.status === "success") {
         setUploadStatus("success");
         const imageUrl = URL.createObjectURL(selectedFile);
-        onUploadSuccess(imageUrl, data.predictions);
+        onUploadSuccess(imageUrl, data.bestPrediction);
         setTimeout(handleClose, 1000);
       } else {
         setError(data.error || "Upload failed");
