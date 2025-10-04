@@ -23,7 +23,7 @@ export async function POST(req) {
       contentType: file.type,
     });
 
-    const resFlask = await fetch("http://localhost:5000/predict", {
+    const resFlask = await fetch(" http://13.210.100.22:5000/predict", {
       method: "POST",
       body: form,
       headers: form.getHeaders(), // สำคัญ!
