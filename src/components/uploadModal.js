@@ -92,7 +92,10 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
     setError("");
   };
 
-  const handleFileSelect = (e) => setSelectedFile(e.target.files[0]);
+  const handleFileSelect = (e) => {
+  setSelectedFile(e.target.files[0]);
+  onUploadSuccess(null, null); // รีเซ็ต state parent ทันที
+};
 
   const handleUploadStart = () => {
     // รีเซ็ต state ของ parent

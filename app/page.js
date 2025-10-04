@@ -69,10 +69,12 @@ export default function VeggieHome() {
 
           <div className="hidden lg:flex lg:w-1/2 flex justify-center lg:justify-end">
             <Image
+            key={uploadedImageUrl}
               src={vegetableBasketImage}
               alt="A basket full of fresh vegetables"
               width={300}
               height={300}
+              unoptimized
               // [แก้ไข] ปรับแก้คลาส max-w-* ให้มีขนาดเล็กลงในแต่ละขนาดหน้าจอ
               className="w-full h-auto rounded-lg max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md"
               priority
@@ -88,6 +90,7 @@ export default function VeggieHome() {
         className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28"
       >
         <OutputDisplay 
+        key={uploadedImageUrl}
           imageUrl={uploadedImageUrl} 
           vegName={aiResultName}
         />
