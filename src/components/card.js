@@ -21,16 +21,13 @@ export default function Card({ imageVeg, title, vegetableData, onCardClick }) {
       onClick={handleFlip}
     >
       <div
-        className={`absolute inset-0 w-full h-full transition-all  duration-700 [transform-style:preserve-3d] ${
+        className={`absolute inset-0 w-full h-full transition-all  duration-700 [transform-style:preserve-3d] ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
       >
-        {/* 🔴 ด้านหน้าของการ์ด (Front Face) - Clean & Soft Gradient */}
+        {/* 🔴 ด้านหน้าของการ์ด (Front Face) - เพิ่ม -webkit-backface-visibility */}
         <div
-          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/80 shadow-lg shadow-slate-300/40 
-               group-hover:shadow-xl group-hover:shadow-slate-400/30 group-hover:-translate-y-2 
-               transition-all duration-300 ease-out 
-               [backface-visibility:hidden] flex flex-col p-8"
+          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/80 shadow-lg shadow-slate-300/40 group-hover:shadow-xl group-hover:shadow-slate-400/30 group-hover:-translate-y-2 transition-all duration-1000 ease-out [backface-visibility:hidden] [-webkit-backface-visibility:hidden] flex flex-col p-8"
         >
           {/* ✅ สร้างพื้นที่รูปภาพที่มีขนาดแน่นอน และเพิ่มวงกลมตกแต่งด้านหลังเพื่อสร้างจุดสนใจ */}
           <div className="relative w-full h-[220px] mb-6">
@@ -45,7 +42,7 @@ export default function Card({ imageVeg, title, vegetableData, onCardClick }) {
               alt={title}
               layout="fill"
               objectFit="contain"
-              className="z-10 drop-shadow-lg" // ✅ เพิ่ม drop-shadow ให้รูปภาพดูเด่นขึ้น
+              className="z-10 drop-shadow-lg"
             />
           </div>
 
@@ -62,8 +59,9 @@ export default function Card({ imageVeg, title, vegetableData, onCardClick }) {
             </h3>
           </div>
         </div>
-        {/* 🔴 ด้านหลังของการ์ด (Back Face) - Focus on Content */}
-        <div className="absolute inset-0 bg-green-50 rounded-2xl shadow-xl ring-1 ring-green-100 group-hover:shadow-2xl transition-all duration-300 ease-in-out [backface-visibility:hidden] [transform:rotateY(180deg)] p-6 flex flex-col justify-start overflow-auto">
+        
+        {/* 🔴 ด้านหลังของการ์ด (Back Face) - เพิ่ม backface-visibility และ -webkit-backface-visibility */}
+        <div className="absolute inset-0 bg-green-50 rounded-2xl shadow-xl ring-1 ring-green-100 group-hover:shadow-2xl transition-all duration-300 ease-in-out [backface-visibility:hidden] [-webkit-backface-visibility:hidden] [transform:rotateY(180deg)] p-6 flex flex-col justify-start overflow-auto">
           {/* หัวข้อด้านหลังที่ดูหนักแน่นขึ้น */}
           <h4 className="text-xl font-extrabold text-green-900 mb-4 border-b-2 border-green-300 pb-2 text-center sticky top-0 bg-green-50 z-10">
             ลักษณะของ {title}
