@@ -16,11 +16,17 @@ const PlayIcon = () => (
 
 export default function VeggieHome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [aiResultName, setAiResultName] = useState("แมงลัก"); 
-  
+  const [aiResultName, setAiResultName] = useState(""); 
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-  const handleUploadSuccess = (imageUrl) => {
+  const outputRef = useRef(null);
+  const handleUploadSuccess = (imageUrl, bestPrediction) => {
     setUploadedImageUrl(imageUrl);
+
+    if (bestPrediction) {
+      setAiResultName(bestPrediction.class); 
+      console.log("🔥 Best Prediction Class:", bestPrediction.class);
+    }
+
     if (outputRef.current) {
       outputRef.current.scrollIntoView({
           behavior: 'smooth', 
@@ -29,7 +35,7 @@ export default function VeggieHome() {
     }
   };
 
-  const outputRef = useRef(null);
+ 
 
 
   return (

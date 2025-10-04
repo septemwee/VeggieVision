@@ -25,62 +25,60 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
 
   if (!isOpen) return null;
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (file) { setSelectedFile(file); }
-  };
-
-  const handleUpload = () => {
-    if (!selectedFile) {
-      setError("Please select a file first!");
-      return;
-    }
-
-    setError('');
-    setUploadStatus('uploading');
-    setProgress(0); 
-    const UPLOAD_DURATION = 2000;
-    const AI_ANALYSIS_DURATION = 3000;
-
-    // --- 1. เริ่ม Progress Bar สำหรับ UPLOAD (วิ่ง 2 วินาที) ---
-    setTimeout(() => {
-        setProgress(100); 
-    }, 50);
-
-    // --- 2. เปลี่ยนเป็นสถานะ ANALYZING ---
-    setTimeout(() => {
-      setUploadStatus('analyzing');
-      setProgress(0); // Reset Progress Bar
-      
-      // --- 3. เริ่ม Progress Bar สำหรับ AI ANALYSIS (วิ่ง 3 วินาที) ---
-      setTimeout(() => {
-        setProgress(100); 
-      }, 50);
-      
-      // --- 4. เปลี่ยนเป็นสถานะ SUCCESS ---
-      setTimeout(() => {
-        setUploadStatus('success');
-        const imageUrl = URL.createObjectURL(selectedFile);
-        onUploadSuccess(imageUrl);
-
-        setTimeout(() => {
-          handleClose();
-        }, 1000);
-
-      }, AI_ANALYSIS_DURATION); 
-
-    }, UPLOAD_DURATION); 
-  };
-
+ 
   const handleClose = () => {
     onClose();
-    setTimeout(() => {
-      setSelectedFile(null);
-      setUploadStatus('idle');
-      setError('');
-      setProgress(0); 
-    }, 300);
-  }
+    setSelectedFile(null);
+    setUploadStatus("idle");
+    setError("");
+  };
+
+  const handleFileSelect = (e) => setSelectedFile(e.target.files[0]);
+
+  const handleUpload = async () => {
+    
+    // *** จุดที่ 1: Log ก่อนการตรวจสอบไฟล์ ***
+    console.log("--- DEBUG START ---");
+    console.log("Selected File State:", selectedFile); 
+    // ถ้าตัวนี้เป็น null แปลว่าไฟล์ไม่ถูกเลือก
+
+       if (!selectedFile) { 
+        setError("Please select a file!"); 
+        console.log("Upload stopped: selectedFile is null.");
+        return; 
+    }
+
+    setUploadStatus("uploading");
+    setError("");
+
+    const formData = new FormData();
+   formData.append("image", selectedFile);
+
+// *** จุดที่ 2: ตรวจสอบ FormData ก่อนส่ง (ถ้าถึงจุดนี้ แปลว่า selectedFile ไม่ใช่ null) ***
+    console.log("Selected File Name:", selectedFile.name);
+    console.log("Does FormData have 'image'? ", formData.has("image"));
+    console.log("------------------------");
+
+    try {
+      const res = await fetch("/api/test", { method: "POST", body: formData });
+      const data = await res.json();
+
+      if (data.status === "success") {
+        setUploadStatus("success");
+        const imageUrl = URL.createObjectURL(selectedFile);
+        onUploadSuccess(imageUrl, data.bestPrediction);
+        setTimeout(handleClose, 1000);
+      } else {
+        setError(data.error || "Upload failed");
+        setUploadStatus("idle");
+      }
+    } catch (err) {
+      setError(err.message);
+      setUploadStatus("idle");
+    }
+  };
+
+
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
