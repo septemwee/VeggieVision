@@ -19,6 +19,7 @@ export default function VeggieHome() {
   const [aiResultName, setAiResultName] = useState(""); 
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const outputRef = useRef(null);
+  
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
     setUploadedImageUrl(imageUrl);
 
