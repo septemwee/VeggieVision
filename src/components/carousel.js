@@ -113,9 +113,16 @@ export default function Carousel({ children }) {
             )} */}
 
             {/* Container ที่จะ scroll */}
-            <div 
+            {/* <div
                 ref={scrollContainerRef}
                 className="flex items-stretch gap-4 py-6 -mx-4 px-4 snap-x snap-start hide-scrollbar"
+            >
+                {children}
+            </div> */}
+
+            <div 
+                ref={scrollContainerRef}
+                className="flex flex-wrap gap-6 py-6 px-2"
             >
                 {children}
             </div>

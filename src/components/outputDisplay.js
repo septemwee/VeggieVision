@@ -14,7 +14,7 @@ const mockVegetableResult = "โหระพา";
 // Component หลักของเรา
 export default function OutputDisplay({ imageUrl , vegName }) {
     
-    const cardWidthClasses = "flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 snap-start";
+    const cardWidthClasses = "w-full mb-4 sm:mb-0 md:w-[calc(50%-0.75rem)] lg:w-[calc(33.3333%-1rem)] ";
     const hasResult = imageUrl !== null && 
                       imageUrl !== undefined && 
                       vegName !== null && 
@@ -33,7 +33,7 @@ export default function OutputDisplay({ imageUrl , vegName }) {
 
 
      return (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-md w-full min-h-[20rem] flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-md w-full min-h-[20rem] flex items-center justify-center p-2">
             {hasResult ? (
                 // 🔴 1. หลังอัปโหลดรูป: แสดง VegetableDetail
                 <div className="w-full">
