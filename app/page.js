@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState , useRef} from 'react';
+import React, {useState , useRef, useEffect} from 'react';
 import Image from 'next/image';
 import UploadModal from '../src/components/uploadModal.js';
 import OutputDisplay from '@/src/components/outputDisplay.js';
@@ -36,7 +36,14 @@ export default function VeggieHome() {
     }
   };
 
- 
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then(reg => console.log("Service Worker registered:", reg))
+        .catch(err => console.log("Service Worker registration failed:", err));
+    }
+  }, []);
 
 
   return (

@@ -29,8 +29,8 @@ export async function POST(req) {
     const resFlask = await fetch("http://13.210.100.22:5000/predict", {
       method: "POST",
       body: form,
-      headers: form.getHeaders(), 
-      cache: "no-store"
+      headers: form.getHeaders(),
+      cache: "no-store",
     });
 
     // แปลงผลลัพธ์จาก Flask
@@ -44,18 +44,18 @@ export async function POST(req) {
       );
     }
 
-       return NextResponse.json(
+    return NextResponse.json(
       { status: "success", bestPrediction, predictions: data },
       {
         status: 200,
         headers: {
-          "Cache-Control": "no-store, max-age=0, must-revalidate, proxy-revalidate",
+          "Cache-Control":
+            "no-store, max-age=0, must-revalidate, proxy-revalidate",
           Pragma: "no-cache",
           Expires: "0",
         },
       }
     );
-    
   } catch (err) {
     console.error("Error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });

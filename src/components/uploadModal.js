@@ -135,7 +135,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
     console.log("------------------------");
 
     try {
-      const res = await fetch(`/api/test?ts=${Date.now()}`, {
+      const res = await fetch(`/api/model?ts=${Date.now()}`, {
         method: "POST",
         body: formData,
         cache: "no-store", // ป้องกัน browser cache
@@ -155,7 +155,7 @@ const predictedClass = apiData?.bestPrediction?.class || "Unknown";
     }
   };
 
-  
+
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-md mx-auto p-4 sm:p-6 relative transition-all transform scale-100 opacity-100">
