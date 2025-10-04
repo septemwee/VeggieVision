@@ -19,7 +19,7 @@ export async function POST(req) {
     const buffer = Buffer.from(arrayBuffer);
 
     // สร้าง form-data ใหม่เพื่อส่งให้ Flask
-    const form = new formData();
+    const form = new FormData();
     form.append("image", buffer, {
       filename: file.name,
       contentType: file.type,

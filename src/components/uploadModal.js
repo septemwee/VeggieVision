@@ -93,9 +93,9 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
   };
 
   const handleFileSelect = (e) => {
-  setSelectedFile(e.target.files[0]);
-  onUploadSuccess(null, null); // รีเซ็ต state parent ทันที
-};
+    setSelectedFile(e.target.files[0]);
+    onUploadSuccess(null, null); // รีเซ็ต state parent ทันที
+  };
 
   const handleUploadStart = () => {
     // รีเซ็ต state ของ parent
@@ -139,8 +139,8 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
       if (data.status === "success") {
         setUploadStatus("success");
         const imageUrl = URL.createObjectURL(selectedFile);
-        const timestamp = new Date().getTime();
-        onUploadSuccess(`${imageUrl}?t=${timestamp}`, data.bestPrediction);
+        onUploadSuccess(imageUrl, data.bestPrediction);
+
         setTimeout(handleClose, 1000);
       } else {
         setError(data.error || "Upload failed");
