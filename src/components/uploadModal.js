@@ -35,6 +35,11 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
 
   const handleFileSelect = (e) => setSelectedFile(e.target.files[0]);
 
+  const handleUploadStart = () => {
+  setUploadedImageUrl(null);
+  setAiResultName("");
+};
+
   const handleUpload = async () => {
     
     // *** จุดที่ 1: Log ก่อนการตรวจสอบไฟล์ ***
@@ -48,8 +53,10 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         return; 
     }
 
+    handleUploadStart();
     setUploadStatus("uploading");
     setError("");
+    onUploadSuccess(null, null);
 
     const formData = new FormData();
    formData.append("image", selectedFile);
