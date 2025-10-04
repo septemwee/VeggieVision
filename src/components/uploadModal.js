@@ -3,6 +3,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { getVegetableData } from "./veggieData";
 
 // Icon Components (ไม่มีการเปลี่ยนแปลง)
 const FileIcon = () => (
@@ -82,6 +83,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
+  const [data, setData] = useState(null);
 
   if (!isOpen) return null;
 
@@ -133,25 +135,27 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
     console.log("------------------------");
 
     try {
-      const res = await fetch("/api/test", { method: "POST", body: formData });
-      const data = await res.json();
+      const res = await fetch(`/api/test?ts=${Date.now()}`, {
+        method: "POST",
+        body: formData,
+        cache: "no-store", // ป้องกัน browser cache
+      });
 
-      if (data.status === "success") {
-        setUploadStatus("success");
-        const imageUrl = URL.createObjectURL(selectedFile);
-        onUploadSuccess(imageUrl, data.bestPrediction);
+       const apiData = await res.json();
+      setData(apiData); // เก็บ data ทั้งหมดจาก API
+    
+const predictedClass = apiData?.bestPrediction?.class || "Unknown";
+      onUploadSuccess(URL.createObjectURL(selectedFile), apiData.bestPrediction);
 
-        setTimeout(handleClose, 1000);
-      } else {
-        setError(data.error || "Upload failed");
-        setUploadStatus("idle");
-      }
+      setUploadStatus("success");
+      setTimeout(() => handleClose(), 1000);
     } catch (err) {
       setError(err.message);
       setUploadStatus("idle");
     }
   };
 
+  
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-md mx-auto p-4 sm:p-6 relative transition-all transform scale-100 opacity-100">

@@ -44,11 +44,18 @@ export async function POST(req) {
       );
     }
 
-    return NextResponse.json({
-      status: "success",
-      bestPrediction,
-      predictions: data,
-    });
+       return NextResponse.json(
+      { status: "success", bestPrediction, predictions: data },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, max-age=0, must-revalidate, proxy-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
+    );
+    
   } catch (err) {
     console.error("Error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
