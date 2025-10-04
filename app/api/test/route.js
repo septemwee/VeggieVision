@@ -19,7 +19,7 @@ export async function POST(req) {
     const buffer = Buffer.from(arrayBuffer);
 
     // สร้าง form-data ใหม่เพื่อส่งให้ Flask
-    const form = new FormData();
+    const form = new formData();
     form.append("image", buffer, {
       filename: file.name,
       contentType: file.type,
@@ -29,7 +29,8 @@ export async function POST(req) {
     const resFlask = await fetch("http://13.210.100.22:5000/predict", {
       method: "POST",
       body: form,
-      headers: form.getHeaders(), // สำคัญมาก
+      headers: form.getHeaders(), 
+      cache: "no-store"
     });
 
     // แปลงผลลัพธ์จาก Flask
