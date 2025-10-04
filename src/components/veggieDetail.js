@@ -31,12 +31,29 @@ export default function VegetableDetail({ vegetableName, uploadedImageUrl }) {
     
     // ดึงข้อมูลผักตามชื่อ
     const data = getVegetableData(vegetableName);
+    const ErrorIcon = () => (
+        <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            strokeWidth={1.5} 
+            stroke="currentColor" 
+            className="w-10 h-10 text-red-500" // 🔴 ขนาดและสีแดง
+        >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    );
     
     if (!data) {
         return (
             <div className="text-center p-10 text-gray-500">
-                <h2 className="text-2xl font-bold">ไม่พบข้อมูลผัก</h2>
-                <p>ไม่พบข้อมูลสำหรับ "{vegetableName}" กรุณาลองอัปโหลดรูปภาพอื่น</p>
+
+                <div className="flex justify-center mb-4">
+                    <ErrorIcon />
+                </div>
+
+                <h2 className="text-2xl font-bold text-gray-800">ไม่พบผักในรูปภาพ</h2>
+                <p className="mt-2 text-lg">กรุณาลองอัปโหลดรูปภาพอื่น</p>
             </div>
         );
     }

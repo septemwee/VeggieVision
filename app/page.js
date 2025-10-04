@@ -52,7 +52,7 @@ export default function VeggieHome() {
               Veggie Vision
             </h1>
             <p className="mt-4 text-lg text-gray-600 max-w-xl mx-auto lg:mx-0">
-                ต้องการรู้ไหมว่าผักนี้คืออะไร? Veggie Vision ช่วยคุณได้! เพียงแค่ อัปโหลดรูปภาพผักของคุณ ระบบ AI จะวิเคราะห์และระบุชื่อผักให้คุณในไม่กี่วินาที ทำให้การแยกแยะผักเป็นเรื่องง่ายกว่าที่เคย
+                ต้องการรู้ไหมว่าผักนี้คืออะไร? Veggie Vision ช่วยคุณได้! เพียงแค่ อัปโหลดรูปภาพผักของคุณ ระบบ AI จะวิเคราะห์และระบุชื่อผักให้คุณในไม่กี่วินาที <br/>ทำให้การแยกแยะผักเป็นเรื่องง่ายกว่าที่เคย
             </p>
             <div className="mt-8 flex justify-center lg:justify-start">
               <button 

@@ -101,7 +101,7 @@ export default function Carousel({ children }) {
         <div className="relative w-full max-w-5xl mx-auto px-8 "> 
             
             {/* ปุ่มเลื่อนซ้าย */}
-            {!isAtStart && (
+            {/* {!isAtStart && (
                 <button 
                     onClick={() => handleScroll('left')} 
                     // ปรับตำแหน่ง: left-0, -translate-x-1/2 
@@ -110,18 +110,25 @@ export default function Carousel({ children }) {
                 >
                     <ChevronLeftIcon />
                 </button>
-            )}
+            )} */}
 
             {/* Container ที่จะ scroll */}
+            {/* <div
+                ref={scrollContainerRef}
+                className="flex items-stretch gap-4 py-6 -mx-4 px-4 snap-x snap-start hide-scrollbar"
+            >
+                {children}
+            </div> */}
+
             <div 
                 ref={scrollContainerRef}
-                className="flex items-stretch gap-4 py-6 -mx-4 px-4 overflow-x-scroll snap-x snap-start hide-scrollbar"
+                className="flex flex-wrap gap-6 py-6 px-2"
             >
                 {children}
             </div>
 
             {/* ปุ่มเลื่อนขวา */}
-            {!isAtEnd && (
+            {/* {!isAtEnd && (
                 <button 
                     onClick={() => handleScroll('right')}
                     // ปรับตำแหน่ง: right-0, translate-x-1/2 
@@ -130,7 +137,7 @@ export default function Carousel({ children }) {
                 >
                     <ChevronRightIcon />
                 </button>
-            )}
+            )} */}
         </div>
     );
 }
