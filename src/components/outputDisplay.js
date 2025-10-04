@@ -25,11 +25,10 @@ export default function OutputDisplay({ imageUrl , vegName }) {
         getVegetableData('โหระพา'), 
         getVegetableData('กะเพรา'), 
         getVegetableData('แมงลัก'),
-        getVegetableData('กุยช่าย'),
-        getVegetableData('ผักชี'),
-        getVegetableData('ขึ้นฉ่าย'),
-        getVegetableData('ต้นหอม'),
-        // เพิ่มผักอื่นๆ สำหรับการทดสอบ Carousel
+        // getVegetableData('กุยช่าย'),
+        // getVegetableData('ผักชี'),
+        // getVegetableData('ขึ้นฉ่าย'),
+        // getVegetableData('ต้นหอม'),
     ].filter(Boolean);
 
 
