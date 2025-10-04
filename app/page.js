@@ -39,9 +39,11 @@ export default function VeggieHome() {
 
 
   return (
-    <div className="bg-white text-gray-800">
-      <div className="absolute z-0 top-0 left-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute z-0 bottom-0 right-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full translate-x-1/2 translate-y-1/2"></div>
+    <div className="bg-white text-gray-800 relative">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] md:w-[650px] md:h-[650px] bg-green-200/40 rounded-full translate-x-1/2 translate-y-[25%]"></div> 
+      </div>
 
       <main className="relative z-10 max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-16 lg:pb-10">
