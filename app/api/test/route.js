@@ -1,51 +1,55 @@
 import FormData from "form-data";
-import fs from "fs";
-import fetch from "node-fetch"; // สำหรับ Node.js
+import fetch from "node-fetch";
 import { NextResponse } from "next/server";
 
-export const config = { api: { bodyParser: false } };
+export const runtime = "nodejs"; // บอกให้ Next ใช้ Node runtime (จำเป็นเมื่อใช้ FormData)
 
 export async function POST(req) {
   try {
+    // อ่านข้อมูลไฟล์จาก request
     const formData = await req.formData();
     const file = formData.get("image");
-    console.log(file);
 
-    if (!file)
+    if (!file) {
       return NextResponse.json({ error: "No file sent" }, { status: 400 });
+    }
 
+    // แปลงเป็น Buffer เพื่อส่งต่อให้ Flask
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
+    // สร้าง form-data ใหม่เพื่อส่งให้ Flask
     const form = new FormData();
     form.append("image", buffer, {
       filename: file.name,
       contentType: file.type,
     });
 
-    const resFlask = await fetch(" http://13.210.100.22:5000/predict", {
+    // ส่งต่อไปยัง Flask Server
+    const resFlask = await fetch("http://13.210.100.22:5000/predict", {
       method: "POST",
       body: form,
-      headers: form.getHeaders(), // สำคัญ!
+      headers: form.getHeaders(), // สำคัญมาก
     });
 
+    // แปลงผลลัพธ์จาก Flask
     const data = await resFlask.json();
-    console.log("data:",data);
-    // หา object ที่ confidence สูงที่สุด
+
+    // หา prediction ที่มี confidence สูงสุด
     let bestPrediction = null;
     if (Array.isArray(data) && data.length > 0) {
       bestPrediction = data.reduce((max, item) =>
         item.confidence > max.confidence ? item : max
       );
     }
-    console.log("bestPrediction:",bestPrediction);
+
     return NextResponse.json({
       status: "success",
-      bestPrediction, // ส่ง class + confidence สูงสุดกลับไป
-      predictions: data, // ถ้าอยากเก็บผลลัพธ์ทั้งหมดด้วย
+      bestPrediction,
+      predictions: data,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
