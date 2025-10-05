@@ -51,7 +51,7 @@ export default function VegetableDetail({ vegetableName, uploadedImageUrl }) {
         <div className="flex justify-center mb-4">
           <ErrorIcon />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800">ไม่พบผักในรูปภาพ</h2>
+        <h2 className="text-2xl font-bold text-gray-800">ไม่พบกะเพรา โหระพา หรือแมงลักในรูปภาพ</h2>
         <p className="mt-2 text-lg">กรุณาลองอัปโหลดรูปภาพอื่น</p>
       </div>
     );
