@@ -162,27 +162,20 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         {uploadStatus === "uploading" && (
           <div className="flex flex-col items-center justify-center h-48">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Uploading File...</h2>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-              <div
-                className="bg-green-600 h-2.5 rounded-full transition-all duration-300 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center">
-              {selectedFile?.name}
+            <p className="mt-1 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
+              Uploading... {selectedFile?.name}
             </p>
-            <p className="text-gray-600 text-sm mt-1">{progress}%</p>
           </div>
         )}
 
         {/* --- Analyzing --- */}
         {uploadStatus === "analyzing" && (
-          <div className="flex flex-col items-center justify-center h-48">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Analyzing with AI...</h2>
-            <p className="text-gray-600 text-sm mt-1 animate-pulse">
+        <div className="flex flex-col items-center justify-center h-48 text-center px-4">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">Analyzing with AI...</h2>
+            <p className="text-gray-600 text-xs sm:text-sm mt-1 animate-pulse px-2">
               Please wait while the AI analyzes your vegetable.
             </p>
-          </div>
+        </div>
         )}
 
         {/* --- Success --- */}

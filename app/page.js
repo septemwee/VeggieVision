@@ -11,14 +11,21 @@ export default function VeggieHome() {
   const [aiResultName, setAiResultName] = useState(""); 
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const outputRef = useRef(null);
+
+  const resetState = () => {
+      setAiResultName("");
+      setUploadedImageUrl(null);
+  }
   
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
-    // แค่เซ็ต state เท่านั้น
     setUploadedImageUrl(imageUrl);
 
-    if (bestPrediction) {
+    if (bestPrediction && bestPrediction.class && typeof bestPrediction.class === 'string' && bestPrediction.class.trim() !== '' ) {
       setAiResultName(bestPrediction.class); 
       console.log("🔥 Best Prediction Class:", bestPrediction.class);
+    } else {
+      setAiResultName("Unknown"); 
+      console.log("⚠️ AI did not return a valid class name, setting result to 'Unknown'.");
     }
   };
 

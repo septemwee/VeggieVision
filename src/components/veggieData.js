@@ -90,6 +90,9 @@ export const getVegetableData = (name) => {
     
     case "Unknown" :
       return null;
+      
+    case null :
+      return null;
 
     default:
       return null;
