@@ -1,18 +1,10 @@
 'use client';
 
-import React, {useState , useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import UploadModal from '../src/components/uploadModal.js';
 import OutputDisplay from '@/src/components/outputDisplay.js';
 import vegetableBasketImage from '@/src/images/vegetable_basket.png';
-
-
-// PlayIcon component remains the same
-const PlayIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-800" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-    </svg>
-);
 
 export default function VeggieHome() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,20 +13,24 @@ export default function VeggieHome() {
   const outputRef = useRef(null);
   
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
+    // แค่เซ็ต state เท่านั้น
     setUploadedImageUrl(imageUrl);
 
     if (bestPrediction) {
       setAiResultName(bestPrediction.class); 
       console.log("🔥 Best Prediction Class:", bestPrediction.class);
     }
+  };
 
-    if (outputRef.current) {
-      outputRef.current.scrollIntoView({
-          behavior: 'smooth', 
-          block: 'start', 
+  // useEffect สำหรับ scroll หลัง modal ปิด
+  useEffect(() => {
+    if (uploadedImageUrl && !isModalOpen) {
+      outputRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     }
-  };
+  }, [uploadedImageUrl, isModalOpen]);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -45,7 +41,6 @@ export default function VeggieHome() {
     }
   }, []);
 
-
   return (
     <div className="bg-white text-gray-800 relative">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -55,8 +50,6 @@ export default function VeggieHome() {
 
       <main className="relative z-10 max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 py-16 sm:py-20 lg:pt-16 lg:pb-10">
-
-          {/* -- Text Content -- */}
           <div className="lg:w-1/2 text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-900 leading-tight tracking-tight">
               Veggie Vision
@@ -76,28 +69,25 @@ export default function VeggieHome() {
 
           <div className="hidden lg:flex lg:w-1/2 flex justify-center lg:justify-end">
             <Image
-            key={uploadedImageUrl}
+              key={uploadedImageUrl}
               src={vegetableBasketImage}
               alt="A basket full of fresh vegetables"
               width={300}
               height={300}
               unoptimized
-              // [แก้ไข] ปรับแก้คลาส max-w-* ให้มีขนาดเล็กลงในแต่ละขนาดหน้าจอ
               className="w-full h-auto rounded-lg max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md"
               priority
             />
           </div>
-
         </div>
       </main>
 
-      {/* --- Output Section --- */}
       <div 
         ref={outputRef} 
         className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28"
       >
         <OutputDisplay 
-        key={uploadedImageUrl}
+          key={uploadedImageUrl}
           imageUrl={uploadedImageUrl} 
           vegName={aiResultName}
         />
@@ -111,4 +101,3 @@ export default function VeggieHome() {
     </div>
   );
 }
-
