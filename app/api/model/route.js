@@ -14,7 +14,6 @@ export async function POST(req) {
     const form = new FormData();
     form.append("image", buffer, { filename: file.name, contentType: file.type });
 
-    // Next.js fetch ไป FastAPI container port 5000
     const resFastAPI = await fetch("http://localhost:5000/predict", {
       method: "POST",
       body: form,
@@ -23,12 +22,13 @@ export async function POST(req) {
 
     const data = await resFastAPI.json();
 
-    // ถ้า leaf ไม่ใช่ leaf → bestPrediction = null
-    const bestPrediction = (data.leaf?.class === "leaf") ? data.type : null;
+   // bestPrediction ถ้า stage = "leaf"
+const bestPrediction = data.stage === "leaf" ? data.leaf_label : null;
+console.log("🔥 Best Prediction Class:", bestPrediction);
 
     return NextResponse.json({ 
       status: "success",
-      leaf: data.leaf,
+      stage: data.stage,
       bestPrediction,
       predictions: data
     });

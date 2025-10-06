@@ -24,8 +24,8 @@ export default function VeggieHome() {
     setUploadedImageUrl(imageUrl);
 
     if (bestPrediction) {
-      setAiResultName(bestPrediction.class); 
-      console.log("🔥 Best Prediction Class:", bestPrediction.class);
+      setAiResultName(bestPrediction); 
+      console.log("🔥 Best Prediction Class:", bestPrediction);
     }
 
     if (outputRef.current) {

@@ -141,11 +141,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         cache: "no-store", // ป้องกัน browser cache
       });
 
-       const apiData = await res.json();
+      const apiData = await res.json();
       setData(apiData); // เก็บ data ทั้งหมดจาก API
-    
-const predictedClass = apiData?.bestPrediction?.class || "Unknown";
-      onUploadSuccess(URL.createObjectURL(selectedFile), apiData.bestPrediction);
+
+      const predictedClass = apiData.bestPrediction || "Unknown";
+console.log("🔥 Best Prediction Class:", predictedClass);
+onUploadSuccess(URL.createObjectURL(selectedFile), predictedClass);
+
 
       setUploadStatus("success");
       setTimeout(() => handleClose(), 1000);
@@ -154,7 +156,6 @@ const predictedClass = apiData?.bestPrediction?.class || "Unknown";
       setUploadStatus("idle");
     }
   };
-
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
