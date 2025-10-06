@@ -65,12 +65,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
       }
     };
 
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        try {
-          const apiData = JSON.parse(xhr.responseText);
-          setProgress(100);
-          setUploadStatus("analyzing");
+      const apiData = await res.json();
+      setData(apiData); // เก็บ data ทั้งหมดจาก API
+
+      const predictedClass = apiData.bestPrediction || "Unknown";
+console.log("🔥 Best Prediction Class:", predictedClass);
+onUploadSuccess(URL.createObjectURL(selectedFile), predictedClass);
+
 
           // 🔹 จำลองเวลา AI วิเคราะห์ (2 วินาที)
           setTimeout(() => {
@@ -95,9 +96,6 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
       setError("Network error occurred.");
       setUploadStatus("idle");
     };
-
-    xhr.send(formData);
-  };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:p-0">
@@ -161,19 +159,29 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         {/* --- Uploading --- */}
         {uploadStatus === "uploading" && (
           <div className="flex flex-col items-center justify-center h-48">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Uploading File...</h2>
-            <p className="mt-1 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
-              Uploading... {selectedFile?.name}
+            <h2 className="text-xl font-bold text-gray-800 mb-4">
+              Uploading File...
+            </h2>
+            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
+              Uploading... {selectedFile.name}
             </p>
           </div>
         )}
 
         {/* --- Analyzing --- */}
         {uploadStatus === "analyzing" && (
-        <div className="flex flex-col items-center justify-center h-48 text-center px-4">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">Analyzing with AI...</h2>
-            <p className="text-gray-600 text-xs sm:text-sm mt-1 animate-pulse px-2">
-              Please wait while the AI analyzes your vegetable.
+          <div className="flex flex-col items-center justify-center h-48">
+            <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
+              AI Analyzing Image...
+            </h2>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+              <div
+                className="bg-green-600 h-2.5 rounded-full transition-all duration-[3000ms] ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="mt-4 text-gray-500 text-sm w-full px-2 text-center animate-pulse">
+              Processing with machine learning model.
             </p>
         </div>
         )}

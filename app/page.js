@@ -20,12 +20,16 @@ export default function VeggieHome() {
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
     setUploadedImageUrl(imageUrl);
 
-    if (bestPrediction && bestPrediction.class && typeof bestPrediction.class === 'string' && bestPrediction.class.trim() !== '' ) {
-      setAiResultName(bestPrediction.class); 
-      console.log("🔥 Best Prediction Class:", bestPrediction.class);
-    } else {
-      setAiResultName("Unknown"); 
-      console.log("⚠️ AI did not return a valid class name, setting result to 'Unknown'.");
+    if (bestPrediction) {
+      setAiResultName(bestPrediction); 
+      console.log("🔥 Best Prediction Class:", bestPrediction);
+    }
+
+    if (outputRef.current) {
+      outputRef.current.scrollIntoView({
+          behavior: 'smooth', 
+          block: 'start', 
+      });
     }
   };
 
