@@ -14,7 +14,7 @@ export async function POST(req) {
     const form = new FormData();
     form.append("image", buffer, { filename: file.name, contentType: file.type });
 
-    const resFastAPI = await fetch("http://13.210.100.22/predict", {
+    const resFastAPI = await fetch("http://13.210.100.22:5000/predict", {
       method: "POST",
       body: form,
       headers: form.getHeaders(),

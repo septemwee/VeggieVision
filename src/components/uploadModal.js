@@ -229,15 +229,8 @@ onUploadSuccess(URL.createObjectURL(selectedFile), predictedClass);
             <h2 className="text-xl font-bold text-gray-800 mb-4">
               Uploading File...
             </h2>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-              {/* Progress Bar สำหรับอัปโหลด: สไตล์มาตรฐาน */}
-              <div
-                className="bg-green-600 h-2.5 rounded-full transition-all duration-2000 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center">
-              {selectedFile.name}
+            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
+              Uploading... {selectedFile.name}
             </p>
           </div>
         )}
@@ -254,7 +247,7 @@ onUploadSuccess(URL.createObjectURL(selectedFile), predictedClass);
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <p className="mt-4 text-gray-500 text-sm w-full px-2 text-center">
+            <p className="mt-4 text-gray-500 text-sm w-full px-2 text-center animate-pulse">
               Processing with machine learning model.
             </p>
           </div>
