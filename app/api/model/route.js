@@ -2,62 +2,39 @@ import FormData from "form-data";
 import fetch from "node-fetch";
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs"; // บอกให้ Next ใช้ Node runtime (จำเป็นเมื่อใช้ FormData)
+export const runtime = "nodejs";
 
 export async function POST(req) {
   try {
-    // อ่านข้อมูลไฟล์จาก request
     const formData = await req.formData();
     const file = formData.get("image");
+    if (!file) return NextResponse.json({ error: "No file sent" }, { status: 400 });
 
-    if (!file) {
-      return NextResponse.json({ error: "No file sent" }, { status: 400 });
-    }
-
-    // แปลงเป็น Buffer เพื่อส่งต่อให้ Flask
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-
-    // สร้าง form-data ใหม่เพื่อส่งให้ Flask
+    const buffer = Buffer.from(await file.arrayBuffer());
     const form = new FormData();
-    form.append("image", buffer, {
-      filename: file.name,
-      contentType: file.type,
-    });
+    form.append("image", buffer, { filename: file.name, contentType: file.type });
 
-    // ส่งต่อไปยัง Flask Server
-    const resFlask = await fetch("http://localhost:5000/predict", {
+    // Next.js fetch ไป FastAPI container port 5000
+    const resFastAPI = await fetch("http://localhost:5000/predict", {
       method: "POST",
       body: form,
       headers: form.getHeaders(),
-      cache: "no-store",
     });
 
-    // แปลงผลลัพธ์จาก Flask
-    const data = await resFlask.json();
+    const data = await resFastAPI.json();
 
-    // หา prediction ที่มี confidence สูงสุด
-    let bestPrediction = null;
-    if (Array.isArray(data) && data.length > 0) {
-      bestPrediction = data.reduce((max, item) =>
-        item.confidence > max.confidence ? item : max
-      );
-    }
+    // ถ้า leaf ไม่ใช่ leaf → bestPrediction = null
+    const bestPrediction = (data.leaf?.class === "leaf") ? data.type : null;
 
-    return NextResponse.json(
-      { status: "success", bestPrediction, predictions: data },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control":
-            "no-store, max-age=0, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
-        },
-      }
-    );
+    return NextResponse.json({ 
+      status: "success",
+      leaf: data.leaf,
+      bestPrediction,
+      predictions: data
+    });
+
   } catch (err) {
-    console.error("Error:", err);
+    console.error(err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
