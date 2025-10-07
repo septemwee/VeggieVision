@@ -4,9 +4,8 @@ import HolyBasilImage from "@/src/images/HolyBasil.png";
 import SweetBasilImage from "@/src/images/SweetBasil.png";
 
 export const getVegetableData = (name) => {
-  // ใช้ .toLowerCase() เพื่อให้รองรับการค้นหาแบบไม่คำนึงถึงตัวพิมพ์ใหญ่-เล็ก
-  switch (name.toLowerCase()) {
-    case "basil":
+  switch (name) {
+    case "Basil":
       return {
         name: "โหระพา",
         localNames:
@@ -36,7 +35,8 @@ export const getVegetableData = (name) => {
           "บำรุงหัวใจและหลอดเลือด",
         ],
       };
-    case "holy_basil":
+
+    case "Holy Basil":
       return {
         name: "กะเพรา",
         localNames:
@@ -61,7 +61,8 @@ export const getVegetableData = (name) => {
           "ช่วยลดระดับน้ำตาลในเลือด",
         ],
       };
-    case "sweet_basil":
+
+    case "Sweet Basil":
       return {
         name: "แมงลัก",
         localNames:
@@ -86,8 +87,11 @@ export const getVegetableData = (name) => {
           "มีสารที่ช่วยบำรุงสายตา",
         ],
       };
-
-    case "unknown":
+    
+    case "Unknown" :
+      return null;
+      
+    case null :
       return null;
 
     default:
