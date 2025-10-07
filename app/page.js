@@ -17,13 +17,19 @@ export default function VeggieHome() {
       setUploadedImageUrl(null);
   }
   
+   
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
     setUploadedImageUrl(imageUrl);
 
-    if (bestPrediction) {
+    if (bestPrediction && bestPrediction.class && typeof bestPrediction.class === 'string' && bestPrediction.class.trim() !== '' ) {
       setAiResultName(bestPrediction.class); 
       console.log("🔥 Best Prediction Class:", bestPrediction.class);
+    } else {
+      setAiResultName("Unknown"); 
+      console.log("⚠️ AI did not return a valid class name, setting result to 'Unknown'.");
     }
+  };
+
 
     if (outputRef.current) {
       outputRef.current.scrollIntoView({
