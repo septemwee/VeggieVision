@@ -48,7 +48,6 @@ export default function VeggieHome() {
     }
   }, []);
 
-
   return (
     <div className="bg-white text-gray-800 relative">
       <div className="absolute inset-0 z-0 overflow-hidden">
