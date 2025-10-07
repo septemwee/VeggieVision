@@ -5,7 +5,6 @@
 import React, { useState, useRef } from "react";
 import { getVegetableData } from "./veggieData";
 
-// Icon Components (ไม่มีการเปลี่ยนแปลง)
 const FileIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -144,10 +143,11 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
       const apiData = await res.json();
       setData(apiData); // เก็บ data ทั้งหมดจาก API
 
-      const predictedClass = apiData.bestPrediction || "Unknown";
-console.log("🔥 Best Prediction Class:", predictedClass);
-onUploadSuccess(URL.createObjectURL(selectedFile), predictedClass);
-
+          setTimeout(() => {
+            setUploadStatus("success");
+            onUploadSuccess(URL.createObjectURL(selectedFile), apiData.bestPrediction);
+            setTimeout(() => handleClose(), 1000);
+          }, 2000);
 
       setUploadStatus("success");
       setTimeout(() => handleClose(), 1000);
