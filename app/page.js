@@ -17,7 +17,6 @@ export default function VeggieHome() {
       setUploadedImageUrl(null);
   }
   
-   
   const handleUploadSuccess = (imageUrl, bestPrediction) => {
     setUploadedImageUrl(imageUrl);
 
@@ -27,15 +26,6 @@ export default function VeggieHome() {
     } else {
       setAiResultName("Unknown"); 
       console.log("⚠️ AI did not return a valid class name, setting result to 'Unknown'.");
-    }
-  };
-
-
-    if (outputRef.current) {
-      outputRef.current.scrollIntoView({
-          behavior: 'smooth', 
-          block: 'start', 
-      });
     }
   };
 
@@ -57,6 +47,7 @@ export default function VeggieHome() {
         .catch(err => console.log("Service Worker registration failed:", err));
     }
   }, []);
+
 
   return (
     <div className="bg-white text-gray-800 relative">
