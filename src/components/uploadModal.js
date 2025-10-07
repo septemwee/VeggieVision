@@ -1,88 +1,31 @@
-// components/uploadModal.js
-
 "use client";
 
 import React, { useState, useRef } from "react";
-import { getVegetableData } from "./veggieData";
 
 const FileIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className="w-6 h-6 text-gray-500"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-500">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
   </svg>
 );
+
 const CloseIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
   </svg>
 );
+
 const CheckIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2.5}
-    stroke="currentColor"
-    className="w-8 h-8 text-green-500"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4.5 12.75l6 6 9-13.5"
-    />
-  </svg>
-);
-const AILoadingIcon = () => (
-  <svg
-    className="animate-spin h-8 w-8 text-green-500"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-  >
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    ></circle>
-    <path
-      className="opacity-75"
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-    ></path>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8 text-green-500">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
   </svg>
 );
 
 export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState("idle");
+  const [uploadStatus, setUploadStatus] = useState("idle"); // idle, uploading, analyzing, success
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
-  const [data, setData] = useState(null);
 
   if (!isOpen) return null;
 
@@ -91,57 +34,42 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
     setSelectedFile(null);
     setUploadStatus("idle");
     setError("");
+    setProgress(0);
   };
 
   const handleFileSelect = (e) => {
     setSelectedFile(e.target.files[0]);
-    onUploadSuccess(null, null); // รีเซ็ต state parent ทันที
   };
 
-  const handleUploadStart = () => {
-    // รีเซ็ต state ของ parent
-    onUploadSuccess(null, null);
-
-    // รีเซ็ต state ภายใน modal
-    setUploadStatus("idle");
-    setError("");
-    setProgress(0);
-  };
-
-  const handleUpload = async () => {
-    // *** จุดที่ 1: Log ก่อนการตรวจสอบไฟล์ ***
-    console.log("--- DEBUG START ---");
-    console.log("Selected File State:", selectedFile);
-    // ถ้าตัวนี้เป็น null แปลว่าไฟล์ไม่ถูกเลือก
-
+  const handleUpload = () => {
     if (!selectedFile) {
       setError("Please select a file!");
-      console.log("Upload stopped: selectedFile is null.");
       return;
     }
 
-    handleUploadStart();
     setUploadStatus("uploading");
     setError("");
-    onUploadSuccess(null, null);
+    setProgress(0);
 
     const formData = new FormData();
     formData.append("image", selectedFile);
 
-    // *** จุดที่ 2: ตรวจสอบ FormData ก่อนส่ง (ถ้าถึงจุดนี้ แปลว่า selectedFile ไม่ใช่ null) ***
-    console.log("Selected File Name:", selectedFile.name);
-    console.log("Does FormData have 'image'? ", formData.has("image"));
-    console.log("------------------------");
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `/api/model?ts=${Date.now()}`, true);
 
-    try {
-      const res = await fetch(`/api/model?ts=${Date.now()}`, {
-        method: "POST",
-        body: formData,
-        cache: "no-store", // ป้องกัน browser cache
-      });
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded / event.total) * 100);
+        setProgress(percent);
+      }
+    };
 
-      const apiData = await res.json();
-      setData(apiData); // เก็บ data ทั้งหมดจาก API
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        try {
+          const apiData = JSON.parse(xhr.responseText);
+          setProgress(100);
+          setUploadStatus("analyzing");
 
           setTimeout(() => {
             setUploadStatus("success");
@@ -149,12 +77,22 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
             setTimeout(() => handleClose(), 1000);
           }, 2000);
 
-      setUploadStatus("success");
-      setTimeout(() => handleClose(), 1000);
-    } catch (err) {
-      setError(err.message);
+        } catch (err) {
+          setError("Failed to parse server response.");
+          setUploadStatus("idle");
+        }
+      } else {
+        setError(`Upload failed: ${xhr.statusText}`);
+        setUploadStatus("idle");
+      }
+    };
+
+    xhr.onerror = () => {
+      setError("Network error occurred.");
       setUploadStatus("idle");
-    }
+    };
+
+    xhr.send(formData);
   };
 
   return (
@@ -167,17 +105,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
           <CloseIcon />
         </button>
 
-        {/* --- สถานะปกติ: ให้เลือกไฟล์ --- */}
+        {/* --- Idle --- */}
         {uploadStatus === "idle" && (
           <>
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
-              Upload File
-            </h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Upload File</h2>
             <div
               className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center cursor-pointer transition-colors ${
-                error
-                  ? "border-red-500"
-                  : "border-gray-300 hover:border-green-500"
+                error ? "border-red-500" : "border-gray-300 hover:border-green-500"
               }`}
               onClick={() => fileInputRef.current.click()}
             >
@@ -188,17 +122,14 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                 onChange={handleFileSelect}
               />
               <p className="text-gray-500 text-sm sm:text-base">
-                {selectedFile
-                  ? `Selected: ${selectedFile.name}`
-                  : "Click to select a file"}
+                {selectedFile ? `Selected: ${selectedFile.name}` : "Click to select a file"}
               </p>
             </div>
+
             {selectedFile && (
               <div className="mt-4 flex items-center gap-2 p-2 bg-gray-100 rounded break-words">
                 <FileIcon />
-                <span className="text-sm text-gray-700 truncate">
-                  {selectedFile.name}
-                </span>
+                <span className="text-sm text-gray-700 truncate">{selectedFile.name}</span>
               </div>
             )}
 
@@ -223,37 +154,27 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
           </>
         )}
 
-        {/* --- สถานะกำลังอัปโหลด --- */}
+        {/* --- Uploading --- */}
         {uploadStatus === "uploading" && (
           <div className="flex flex-col items-center justify-center h-48">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
-              Uploading File...
-            </h2>
-            <p className="mt-4 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
-              Uploading... {selectedFile.name}
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Uploading File...</h2>
+            <p className="mt-1 text-gray-500 text-sm truncate w-full px-2 text-center animate-pulse">
+              Uploading... {selectedFile?.name}
             </p>
           </div>
         )}
 
-        {/* --- สถานะกำลังวิเคราะห์ด้วย AI --- */}
+        {/* --- Analyzing --- */}
         {uploadStatus === "analyzing" && (
-          <div className="flex flex-col items-center justify-center h-48">
-            <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">
-              AI Analyzing Image...
-            </h2>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-              <div
-                className="bg-green-600 h-2.5 rounded-full transition-all duration-[3000ms] ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p className="mt-4 text-gray-500 text-sm w-full px-2 text-center animate-pulse">
-              Processing with machine learning model.
+        <div className="flex flex-col items-center justify-center h-48 text-center px-4">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">Analyzing with AI...</h2>
+            <p className="text-gray-600 text-xs sm:text-sm mt-1 animate-pulse px-2">
+              Please wait while the AI analyzes your vegetable.
             </p>
-          </div>
+        </div>
         )}
 
-        {/* --- สถานะสำเร็จ --- */}
+        {/* --- Success --- */}
         {uploadStatus === "success" && (
           <div className="flex flex-col items-center justify-center h-48">
             <CheckIcon />
